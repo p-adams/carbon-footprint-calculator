@@ -4,6 +4,7 @@ import {observer} from 'mobx-react'
 import CarbonFootprint from './CarbonFootprint.js'
 import './App.css';
 
+
 const App = observer(class App extends Component {
   render() {
     return (
