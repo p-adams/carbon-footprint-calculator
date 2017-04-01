@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {observer} from 'mobx-react'
-import { Form, Input, Select, Radio} from 'antd';
+import { Form, Select, Radio} from 'antd';
 import { Checkbox } from 'antd';
 import { Slider, InputNumber} from 'antd';
 const CheckboxGroup = Checkbox.Group;
@@ -23,7 +23,12 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                 </label><hr/><br/>
                 <FormItem>
                     <label>Members of household:</label>
-                    <InputNumber min={0} max={20} style={{ marginLeft: 16 }}/>
+                    <InputNumber
+                        min={0}
+                        max={20}
+                        value={store.household}
+                        onChange={value => store.getHouseholdCount(value)}
+                        style={{ marginLeft: 16 }}/>
                 </FormItem>
                  <FormItem>
                     <label htmlFor="home-size">Size of home:</label>
