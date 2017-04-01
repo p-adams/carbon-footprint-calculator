@@ -4,6 +4,7 @@ class CarbonFootprintCalculator {
     constructor(){
         extendObservable(this, {
             runningTotal: 0,
+            foodConsumption: 2,
             get getRunningTotal(){
                 return this.runningTotal
             },
