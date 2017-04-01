@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
 import {observer} from 'mobx-react'
 import { Form, Input, Select, Radio} from 'antd';
+import { Checkbox } from 'antd';
+import { Slider, InputNumber} from 'antd';
+const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -12,14 +15,15 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
             color: 'white',
             fontWeight: 'lighter'
         }
+        const recycleOptions = ['Glass', 'Plastic', 'Paper', 'Aluminum', 'Steel', 'Food waste'];
         return (
             <Form layout="inline">  
                 <label className="form-title" htmlFor="form-title">
                     Calculate your carbon footprint points using the form below
-                </label><hr/>
+                </label><hr/><br/>
                 <FormItem>
                     <label>Members of household:</label>
-                    <Input/>
+                    <InputNumber min={0} max={20} style={{ marginLeft: 16 }}/>
                 </FormItem>
                  <FormItem>
                     <label htmlFor="home-size">Size of home:</label>
@@ -72,7 +76,44 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                         <Option value={3}>5 - 7 items</Option>
                         <Option value={4}>More than 7 items</Option>
                     </Select>
-                   
+                </FormItem>
+                <FormItem>
+                    <label htmlFor="waste-prod">Waste production:</label>
+                    <h4 style={selectStyle}>I fill {store.wasteProductionValue} garbage can(s) per week:</h4>
+                     <Select placeholder="select garbage can count">
+                        <Option value={0}>1/2 or less</Option>
+                        <Option value={1}>1</Option>
+                        <Option value={2}>2</Option>
+                        <Option value={3}>3</Option>
+                        <Option value={4}>4</Option>
+                    </Select>
+                </FormItem>
+                <FormItem>
+                    <label htmlFor="rec-waste">Recycled waste:</label>
+                    <h4 style={selectStyle}>Do you recycle?</h4>
+                    <RadioGroup>
+                        <Radio value={1}>yes</Radio>
+                        <Radio value={2}>no</Radio>
+                    </RadioGroup>
+                    {/*if yes, show recycle panel*/}
+                     <CheckboxGroup options={recycleOptions}/>
+                </FormItem>
+                <FormItem>
+                    <label htmlFor="transportation">Transportation score:</label>
+                    <h4 style={selectStyle}>I travel x mile(s) by car:</h4>
+                    <Slider min={0} max={20000}/>
+                    <InputNumber min={0} max={20000} style={{ marginLeft: 16 }}
+                    />
+                    <h4 style={selectStyle}>I travel x mile(s) by public transportion:</h4>
+                    <Slider min={0} max={20000}/>
+                    <InputNumber min={0} max={20000} style={{ marginLeft: 16 }}
+                    />
+                    <h4 style={selectStyle}>By airplane, I mainly fly:</h4>
+                    <Select placeholder="select flight distance">
+                        <Option value={0}>Within state</Option>
+                        <Option value={1}>To a nearby state/country</Option>
+                        <Option value={2}>To a another continent</Option>
+                    </Select>
                 </FormItem>
             </Form>
         )
