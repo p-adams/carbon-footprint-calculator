@@ -9,7 +9,8 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
     render(){
         const store = this.props.store
         const selectStyle = {
-            color: 'white'
+            color: 'white',
+            fontWeight: 'lighter'
         }
         return (
             <Form layout="inline">  
@@ -29,7 +30,7 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                         <Option value="apt">Apartment</Option>
                     </Select>
                 </FormItem>
-                    <FormItem>
+                <FormItem>
                     <label htmlFor="food-consumption">Food consumption:</label>
                     <h4 style={selectStyle}>select one</h4>
                     <RadioGroup onChange={this.getDietaryPreference} defaultValue="a">
@@ -43,6 +44,35 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                         <Radio value={2}>I eat both prepackaged and fresh foods</Radio>
                         <Radio value={3}>I eat only fresh foods</Radio>
                     </RadioGroup>
+                </FormItem>
+                <FormItem>
+                    <label htmlFor="water-consumption">Water consumption:</label>
+                    <h4 style={selectStyle}>Per week, I do laundry:</h4>
+                     <Select placeholder="select frequency">
+                        <Option value={0}>0 times</Option>
+                        <Option value={1}>1 - 3 times</Option>
+                        <Option value={2}>4 - 9 times</Option>
+                        <Option value={3}>More than 9 times</Option>
+                    </Select>
+                    <h4 style={selectStyle}>Per week, I run the dishwasher:</h4>
+                     <Select placeholder="select frequency">
+                        <Option value={0}>0 times</Option>
+                        <Option value={1}>1 - 3 times</Option>
+                        <Option value={2}>4 - 9 times</Option>
+                        <Option value={3}>More than 9 times</Option>
+                    </Select>
+                </FormItem>
+                <FormItem>
+                    <label htmlFor="household-items">Household appliances:</label>
+                    <h4 style={selectStyle}>Each year, I purchase:</h4>
+                     <Select placeholder="select frequency">
+                        <Option value={0}>0 items</Option>
+                        <Option value={1}>Less than 3 items</Option>
+                        <Option value={2}>3 - 5 items</Option>
+                        <Option value={3}>5 - 7 items</Option>
+                        <Option value={4}>More than 7 items</Option>
+                    </Select>
+                   
                 </FormItem>
             </Form>
         )
