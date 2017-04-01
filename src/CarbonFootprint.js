@@ -5,6 +5,7 @@ import { Checkbox } from 'antd';
 import { Slider, InputNumber} from 'antd';
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
+const Option = Select.Option
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 
@@ -27,12 +28,15 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                         min={0}
                         max={20}
                         value={store.household}
-                        onChange={value => store.getHouseholdCount(value)}
+                        onChange={value => store.setHouseholdCount(value)}
                         style={{ marginLeft: 16 }}/>
                 </FormItem>
                  <FormItem>
                     <label htmlFor="home-size">Size of home:</label>
-                    <Select placeholder="Please select size of home">
+                    <Select
+                        placeholder="Please select size of home"
+                        onChange={value => store.setHomeSize(value)}
+                        >
                         <Option value="lg">Large</Option>
                         <Option value="md">Medium</Option>
                         <Option value="sm">Small</Option>
@@ -42,93 +46,118 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                 <FormItem>
                     <label htmlFor="food-consumption">Food consumption:</label>
                     <h4 style={selectStyle}>select one</h4>
-                    <RadioGroup onChange={this.getDietaryPreference} defaultValue="a">
+                    <RadioGroup
+                        onChange={e => store.setDiet(e.target.value)}
+                        defaultValue={store.diet}>
                         <RadioButton value="a">meat-eater</RadioButton>
                         <RadioButton value="b">vegetarian</RadioButton>
                         <RadioButton value="c">vegan</RadioButton>
                     </RadioGroup>
                     <label htmlFor="food-choices">What are your food consumption habits?</label>
-                    <RadioGroup onChange={this.getFoodConsumption} value={store.foodConsumption}>
-                        <Radio value={1}>I primarily eat prepackaged foods</Radio>
-                        <Radio value={2}>I eat both prepackaged and fresh foods</Radio>
-                        <Radio value={3}>I eat only fresh foods</Radio>
+                    <RadioGroup
+                        onChange={e => store.setFoodConsumption(e.target.value)}
+                        defaultValue={store.foodConsumption}>
+                        <Radio value="a">I primarily eat prepackaged foods</Radio>
+                        <Radio value="b">I eat both prepackaged and fresh foods</Radio>
+                        <Radio value="c">I eat only fresh foods</Radio>
                     </RadioGroup>
                 </FormItem>
                 <FormItem>
                     <label htmlFor="water-consumption">Water consumption:</label>
                     <h4 style={selectStyle}>Per week, I do laundry:</h4>
-                     <Select placeholder="select frequency">
-                        <Option value={0}>0 times</Option>
-                        <Option value={1}>1 - 3 times</Option>
-                        <Option value={2}>4 - 9 times</Option>
-                        <Option value={3}>More than 9 times</Option>
+                     <Select
+                        placeholder="select frequency"
+                        onChange={value => store.setLaundryCount(value)}
+                        >
+                        <Option value="a">0 times</Option>
+                        <Option value="b">1 - 3 times</Option>
+                        <Option value="c">4 - 9 times</Option>
+                        <Option value="d">More than 9 times</Option>
                     </Select>
                     <h4 style={selectStyle}>Per week, I run the dishwasher:</h4>
-                     <Select placeholder="select frequency">
-                        <Option value={0}>0 times</Option>
-                        <Option value={1}>1 - 3 times</Option>
-                        <Option value={2}>4 - 9 times</Option>
-                        <Option value={3}>More than 9 times</Option>
+                     <Select
+                        placeholder="select frequency"
+                        onChange={value => store.setDishCount(value)}
+                        >
+                        <Option value="a">0 times</Option>
+                        <Option value="b">1 - 3 times</Option>
+                        <Option value="c">4 - 9 times</Option>
+                        <Option value="d">More than 9 times</Option>
                     </Select>
                 </FormItem>
                 <FormItem>
                     <label htmlFor="household-items">Household appliances:</label>
                     <h4 style={selectStyle}>Each year, I purchase:</h4>
-                     <Select placeholder="select frequency">
-                        <Option value={0}>0 items</Option>
-                        <Option value={1}>Less than 3 items</Option>
-                        <Option value={2}>3 - 5 items</Option>
-                        <Option value={3}>5 - 7 items</Option>
-                        <Option value={4}>More than 7 items</Option>
+                     <Select
+                        placeholder="select frequency"
+                        onChange={value => store.setAppliances(value)}
+                        >
+                        <Option value="a">0 items</Option>
+                        <Option value="b">Less than 3 items</Option>
+                        <Option value="c">3 - 5 items</Option>
+                        <Option value="d">5 - 7 items</Option>
+                        <Option value="e">More than 7 items</Option>
                     </Select>
                 </FormItem>
                 <FormItem>
                     <label htmlFor="waste-prod">Waste production:</label>
-                    <h4 style={selectStyle}>I fill {store.wasteProductionValue} garbage can(s) per week:</h4>
-                     <Select placeholder="select garbage can count">
-                        <Option value={0}>1/2 or less</Option>
-                        <Option value={1}>1</Option>
-                        <Option value={2}>2</Option>
-                        <Option value={3}>3</Option>
-                        <Option value={4}>4</Option>
+                    <h4 style={selectStyle}>I fill __ garbage can(s) per week:</h4>
+                     <Select
+                        placeholder="select garbage can count"
+                        onChange={value => store.setWaste(value)}
+                        >
+                        <Option value="a">1/2 or less</Option>
+                        <Option value="b">1</Option>
+                        <Option value="c">2</Option>
+                        <Option value="d">3</Option>
+                        <Option value="e">4</Option>
                     </Select>
                 </FormItem>
                 <FormItem>
                     <label htmlFor="rec-waste">Recycled waste:</label>
                     <h4 style={selectStyle}>Do you recycle?</h4>
-                    <RadioGroup>
-                        <Radio value={1}>yes</Radio>
-                        <Radio value={2}>no</Radio>
+                    <RadioGroup
+                        onChange={e => store.setRecyclePref(e.target.value)}>
+                        <Radio value="a">yes</Radio>
+                        <Radio value="b">no</Radio>
                     </RadioGroup>
-                    {/*if yes, show recycle panel*/}
-                     <CheckboxGroup options={recycleOptions}/>
+                    {store.showRecyclePanel ?
+                    <CheckboxGroup
+                        options={recycleOptions}
+                        onChange={this.handleRecycledItems}
+                        /> 
+                        : null}
                 </FormItem>
                 <FormItem>
                     <label htmlFor="transportation">Transportation score:</label>
-                    <h4 style={selectStyle}>I travel x mile(s) by car:</h4>
-                    <Slider min={0} max={20000}/>
-                    <InputNumber min={0} max={20000} style={{ marginLeft: 16 }}
-                    />
-                    <h4 style={selectStyle}>I travel x mile(s) by public transportion:</h4>
-                    <Slider min={0} max={20000}/>
-                    <InputNumber min={0} max={20000} style={{ marginLeft: 16 }}
-                    />
+                    <h4 style={selectStyle}>I travel __ mile(s) by car:</h4>
+                    <Slider
+                        min={0}
+                        max={20000}
+                        value={store.carVal}
+                        onChange={value => store.setCarTrans(value)}
+                        />
+                    <h4 style={selectStyle}>I travel __ mile(s) by public transportion:</h4>
+                    <Slider
+                        min={0}
+                        max={20000}
+                        value={store.pubTransVal}
+                        onChange={value => store.setPubTrans(value)}
+                        />
                     <h4 style={selectStyle}>By airplane, I mainly fly:</h4>
-                    <Select placeholder="select flight distance">
-                        <Option value={0}>Within state</Option>
-                        <Option value={1}>To a nearby state/country</Option>
-                        <Option value={2}>To a another continent</Option>
+                    <Select
+                        placeholder="select flight distance"
+                        onChange={value => store.setFlight(value)}
+                        >
+                        <Option value="a">Within state</Option>
+                        <Option value="b">To a nearby state/country</Option>
+                        <Option value="c">To a another continent</Option>
                     </Select>
                 </FormItem>
             </Form>
         )
     }
-    getDietaryPreference(e){
-        console.log(e.target.value)
-    }
-    getFoodConsumption(e){
-        console.log(e.target.value)
-    }
+    handleRecycledItems = items => this.props.store.setRecycledItems(items)
 })
 
 export default CarbonFootprint
