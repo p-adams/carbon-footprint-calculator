@@ -11,6 +11,19 @@ body{
   background-color: lightseagreen;
 }
 
+.form-title{
+  font-size: 9pt;
+  margin-bottom: 20px;
+}
+label{
+  color: white;
+}
+
+
 .side-bar, .title, .display_results{
   border: 1px solid red;
+}
+
+.side-bar{
+  padding: 15px;
 }

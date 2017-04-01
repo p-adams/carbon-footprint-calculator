@@ -3,12 +3,12 @@ import {extendObservable, computed} from 'mobx'
 class CarbonFootprintCalculator {
     constructor(){
         extendObservable(this, {
-            totalPoints: 0,
-            get runningTotal(){
-                return this.totalPoints
+            runningTotal: 0,
+            get getRunningTotal(){
+                return this.runningTotal
             },
             calculateTotal : computed(function(){
-                 return this.totalPoints
+                 return this.runningTotal
             })
         })
     }
