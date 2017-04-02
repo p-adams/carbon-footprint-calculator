@@ -20,11 +20,16 @@ label{
   font-weight: bold;
 }
 
-
-.side-bar, .title, .display_results{
-  border: 1px solid red;
-}
-
 .side-bar{
   padding: 20px;
+}
+
+.results{
+  margin-top: 20px;
+  position: fixed;
+  width:80%;
+}
+
+.col{
+  text-align: center;
 }

@@ -3,6 +3,7 @@ import {observer} from 'mobx-react'
 import { Form, Select, Radio} from 'antd';
 import { Checkbox } from 'antd';
 import { Slider, InputNumber} from 'antd';
+import './App.css';
 const CheckboxGroup = Checkbox.Group;
 const FormItem = Form.Item;
 const Option = Select.Option
@@ -26,7 +27,7 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                     <label>Members of household:</label>
                     <InputNumber
                         min={0}
-                        max={20}
+                        max={10}
                         value={store.household}
                         onChange={value => store.setHouseholdCount(value)}
                         style={{ marginLeft: 16 }}/>
@@ -47,16 +48,14 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                     <label htmlFor="food-consumption">Food consumption:</label>
                     <h4 style={selectStyle}>select one</h4>
                     <RadioGroup
-                        onChange={e => store.setDiet(e.target.value)}
-                        defaultValue={store.diet}>
+                        onChange={e => store.setDiet(e.target.value)}>
                         <RadioButton value="a">meat-eater</RadioButton>
                         <RadioButton value="b">vegetarian</RadioButton>
                         <RadioButton value="c">vegan</RadioButton>
                     </RadioGroup>
                     <label htmlFor="food-choices">What are your food consumption habits?</label>
                     <RadioGroup
-                        onChange={e => store.setFoodConsumption(e.target.value)}
-                        defaultValue={store.foodConsumption}>
+                        onChange={e => store.setFoodConsumption(e.target.value)}>
                         <Radio value="a">I primarily eat prepackaged foods</Radio>
                         <Radio value="b">I eat both prepackaged and fresh foods</Radio>
                         <Radio value="c">I eat only fresh foods</Radio>
@@ -92,11 +91,11 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                         placeholder="select frequency"
                         onChange={value => store.setAppliances(value)}
                         >
-                        <Option value="a">0 items</Option>
-                        <Option value="b">Less than 3 items</Option>
-                        <Option value="c">3 - 5 items</Option>
-                        <Option value="d">5 - 7 items</Option>
-                        <Option value="e">More than 7 items</Option>
+                        <Option value="a">0 new items</Option>
+                        <Option value="b">Less than 3 new items</Option>
+                        <Option value="c">3 - 5 new items</Option>
+                        <Option value="d">5 - 7 new items</Option>
+                        <Option value="e">More than 7 new items</Option>
                     </Select>
                 </FormItem>
                 <FormItem>
@@ -140,7 +139,7 @@ const CarbonFootprint = observer(class CarbonFootprint extends Component{
                     <h4 style={selectStyle}>I travel __ mile(s) by public transportion:</h4>
                     <Slider
                         min={0}
-                        max={20000}
+                        max={30000}
                         value={store.pubTransVal}
                         onChange={value => store.setPubTrans(value)}
                         />
